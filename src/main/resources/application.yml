@@ -1,0 +1,16 @@
+spring:
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 447591984423-sgnb61ldpi4u9l2fjjv606eeda48sp9p.apps.googleusercontent.com
+            client-secret: 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
+            redirectUri: "{baseUrl}/oauth2/callback/{registrationId}"
+            scope:
+              - email
+              - profile
+paypal:
+  client-id: AXZl_vIeral-jAJ82HJkaNbkXABa-gAgS2BOCwJfB8KOOLuAHOg2Ky8_UmiJfbnPRq4fAYVyq1ZDqD60
+  client-secret: EOV4EYbhhcQOmTqA4L8vb_pwBzLtZTYVfX0_DpCFCdTx9u0tMKTO139rxT9aX1mz3Q4PX_K-0EHxH9Hc
+  mode: sandbox
