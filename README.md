@@ -18,10 +18,10 @@ I have implemented many features for the back end, but the most notable ones are
 -  Refactoring of various implementation
 -  At least 50% of entities and Dtos
 
-There are many features left to be added, such as subscriptions to Dreamers' accounts with Paypal or another payment provider.
-Also, we have a plan to add a dictionary where both dreams and offers have to go through content verification to limit certain words from appearing on the web app.
-All e-commerce or account management features still need to go through the planning phase.
-Search engine to find the dreams and offers based on custom algorithms.
-Password management.
-AI module such as a chatbot.
-Integration tests are also in the plans.
+1. There are many features left to be added, such as subscriptions to Dreamers' accounts with Paypal or another payment provider.
+2. Also, we have a plan to add a dictionary where both dreams and offers have to go through content verification to limit certain words from appearing on the web app.
+3. All e-commerce or account management features still need to go through the planning phase.
+4. Search engine to find the dreams and offers based on custom algorithms.
+5. Password management.
+6. AI module such as a chatbot.
+7. Integration tests are also in the plans.
