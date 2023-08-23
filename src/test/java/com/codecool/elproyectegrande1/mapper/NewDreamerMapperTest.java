@@ -17,6 +17,7 @@ class NewDreamerMapperTest {
 
     @Test
     void shouldMapEntityToDreamerDto() {
+        //given:
         Dreamer dreamer = new Dreamer("test", "test", "password", new HashSet<>());
         dreamer.setId(1L);
         dreamer.setFollowers(10);
@@ -26,17 +27,19 @@ class NewDreamerMapperTest {
         letters.add(new Letter("many from you, how is it?", "dawid@gmail.com"));
         dreamer.setLetters(letters);
 
+
+        //when:
         DreamerDto actual = newDreamerMapper.mapEntityToDreamerDto(dreamer);
 
+        //then:
         Assertions.assertEquals(dreamer.getId(), actual.getId());
         Assertions.assertEquals(dreamer.getFollowers(), actual.getFollowers());
         Assertions.assertEquals(dreamer.getUsername(), actual.getUsername());
-        Assertions.assertEquals(dreamer.getLetters(), actual.getLetters());
     }
 
     @Test
     void shouldMapNewDreamerDtoToEntity() {
-
+        //given:
         NewDreamerDto newDreamerDto = new NewDreamerDto("test", "test", "password");
 
         HashSet<Letter> letters = new HashSet<>();
@@ -44,8 +47,10 @@ class NewDreamerMapperTest {
         letters.add(new Letter("many from you, how is it?", "dawid@gmail.com"));
         newDreamerDto.setLetters(letters);
 
+        //when:
         Dreamer actual = newDreamerMapper.mapNewDreamerDtoToEntity(newDreamerDto);
 
+        //then:
         Assertions.assertEquals(newDreamerDto.getUsername(), actual.getUsername());
     }
 

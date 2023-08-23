@@ -3,8 +3,6 @@ package com.codecool.elproyectegrande1.repository;
 import com.codecool.elproyectegrande1.ElProyecteGrande1;
 import com.codecool.elproyectegrande1.config.H2TestProfileJPAConfig;
 import com.codecool.elproyectegrande1.entity.*;
-import com.codecool.elproyectegrande1.mapper.NewDreamerMapper;
-import org.instancio.Instancio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,66 +43,91 @@ class CommentRepositoryTest {
 
     @Test
     void givenCommentRepository_whenSaveAndRetrieveEntity_thenOK() {
+        //given:
         User user = getUser();
         User newUser = userRepository.save(user);
         Comment newComment = new Comment("New comment", 0, "Trung", newUser);
         Comment comment = commentRepository.save(newComment);
         comment.setId(1L);
+
+        //when:
         Comment foundEntity = commentRepository.findById(comment.getId()).orElse(null);
+
+        //then:
         Assertions.assertNotNull(foundEntity);
         Assertions.assertEquals(comment.getCommentText(), foundEntity.getCommentText());
     }
 
     @Test
     void shouldLikeCommentWhenRetrievedFromRepository() {
+        //given:
         User user = getUser();
         User newUser = userRepository.save(user);
         Comment newComment = new Comment("New comment", 0, "Trung", newUser);
         Comment comment = commentRepository.save(newComment);
         comment.setId(1L);
+
+        //when:
         Comment actual = commentRepository.findById(comment.getId()).orElse(null);
-        Assertions.assertNotNull(actual);
         actual.setLikes(comment.getLikes() + 1);
+
+        //then:
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(actual.getLikes(), 1);
     }
 
     @Test
     void shouldUpdateCommentWhenRetrievedFromRepository() {
+        //given:
         User user = getUser();
         User newUser = userRepository.save(user);
         Comment newComment = new Comment("New comment", 0, "Trung", newUser);
         Comment comment = commentRepository.save(newComment);
         comment.setId(1L);
         Comment actual = commentRepository.findById(comment.getId()).orElse(null);
-        Assertions.assertNotNull(actual);
+
+        //when:
         LocalDateTime rightNow = LocalDateTime.now();
         String newDesc = "new testing description";
         actual.setComment(newDesc);
         actual.setTimeUpdated(rightNow);
+
+        //then:
+        Assertions.assertNotNull(actual);
         Assertions.assertEquals(actual.getComment(), newDesc);
         Assertions.assertEquals(actual.getTimeUpdated(), rightNow);
     }
 
     @Test
     void shouldDeleteComment() {
+        //given:
         User user = getUser();
         User newUser = userRepository.save(user);
         Comment newComment = new Comment("New comment", 0, "Trung", newUser);
-        Image dreamImage = imageRepository.save(new Image());
-        Dream dream = new Dream("title", "description", new ArrayList<>(), dreamImage);
-        Dreamer dreamer = new Dreamer("thomas", "thomas@gmail.com", "password", new HashSet<>());
-        Dreamer testDreamer = dreamerRepository.save(dreamer);
-        Dreamer actual = dreamerRepository.findById(testDreamer.getId()).orElse(null);
-        dream.setDreamer(actual);
+        Dream dream = getDream();
         dreamRepository.save(dream);
         newComment.setDream(dream);
+
+        //when:
         Comment comment2 = commentRepository.save(newComment);
         comment2.setId(1L);
         Comment nextComment = commentRepository.findById(comment2.getId()).orElse(null);
         Long commentId = nextComment.getId();
         commentRepository.delete(nextComment);
         Comment testComment = commentRepository.findById(commentId).orElse(null);
+
+        //then:
         Assertions.assertNull(testComment);
+    }
+
+    private Dream getDream() {
+        Image dreamImage = imageRepository.save(new Image());
+        Dream dream = new Dream("title", "description", new ArrayList<>(), dreamImage);
+        Dreamer dreamer = new Dreamer("thomas", "thomas@gmail.com", "password", new HashSet<>());
+        Dreamer testDreamer = dreamerRepository.save(dreamer);
+        Dreamer actual = dreamerRepository.findById(testDreamer.getId()).orElse(null);
+        dream.setDreamer(actual);
+        return dream;
     }
 
     private User getUser() {

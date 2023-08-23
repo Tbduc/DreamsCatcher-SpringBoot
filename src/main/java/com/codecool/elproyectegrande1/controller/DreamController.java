@@ -19,7 +19,7 @@ import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:8081/")
+@CrossOrigin(origins = "https://dreams-catcher.onrender.com/")
 @RestController
 @RequestMapping("/api/v1/dreams")
 public class DreamController {

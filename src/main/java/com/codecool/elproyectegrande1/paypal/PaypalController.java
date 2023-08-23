@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@CrossOrigin(origins = "http://localhost:8081/")
+@CrossOrigin(origins = "https://dreams-catcher.onrender.com/")
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -24,7 +24,7 @@ public class PaypalController {
     private final PaypalService paypalService;
     private final DreamerService dreamerService;
 
-    @CrossOrigin(origins = "http://localhost:8081/")
+    @CrossOrigin(origins = "https://dreams-catcher.onrender.com")
     @PostMapping("/payment/create")
     public ResponseEntity<?> createPayment(
             @RequestParam("method") String method,
@@ -38,8 +38,8 @@ public class PaypalController {
         String param = uuid.toString();
         paypalService.saveParameter(param, userId);
         try {
-            String cancelUrl = "http://localhost:8080/payment/cancel";
-            String successUrl = "http://localhost:8080/payment/success?param=" + param + "&userId=" + userId;
+            String cancelUrl = "https://dreams-catcher-spring.herokuapp.com/payment/cancel";
+            String successUrl = "https://dreams-catcher-spring.herokuapp.com/payment/success?param=" + param + "&userId=" + userId;
             User dreamer = dreamerService.findDreamerByDreamId(Long.valueOf(dreamId));
             dreamerService.donateDreamer(dreamer.getId(), BigDecimal.valueOf(Long.valueOf(amount)));
             Payment payment = paypalService.createPayment(
@@ -76,16 +76,16 @@ public class PaypalController {
             try {
                 Payment payment = paypalService.executePayment(paymentId, payerId);
                 if (payment.getState().equals("approved")) {
-                    return new RedirectView("http://localhost:8081/paypal-success");
+                    return new RedirectView("https://dreams-catcher.onrender.com/paypal-success");
                 }
             } catch (PayPalRESTException e) {
                 log.error("Error occurred::", e);
             }
-            return new RedirectView("http://localhost:8081/paypal-error");
+            return new RedirectView("https://dreams-catcher.onrender.com/paypal-error");
         }
         else {
             log.error("Cannot access this resource, you are not authorized.");
-            return new RedirectView("http://localhost:8081/");
+            return new RedirectView("https://dreams-catcher.onrender.com/");
         }
     }
 

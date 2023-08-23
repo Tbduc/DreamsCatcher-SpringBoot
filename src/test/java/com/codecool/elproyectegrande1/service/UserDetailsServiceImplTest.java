@@ -28,23 +28,28 @@ class UserDetailsServiceImplTest {
 
     @Test
     public void shouldReturnsUserDetailsIfUserFoundByUsername() {
-
+        //given:
         String username = "username";
         User user = new User(username, "email", "password");
         when(userRepository.findByUsername(username)).thenReturn(Optional.of(user));
 
+        //when:
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
+        //then:
         Assertions.assertNotNull(userDetails);
         Assertions.assertEquals(username, userDetails.getUsername());
     }
 
     @Test
     public void ShouldThrowsExceptionIfUsernameNotFound() {
-
+        //given:
         String username = "username";
+
+        //when:
         when(userRepository.findByUsername(username)).thenReturn(Optional.empty());
 
+        //then:
         Assertions.assertThrows(
                 UsernameNotFoundException.class,
                 () -> userDetailsService.loadUserByUsername(username),

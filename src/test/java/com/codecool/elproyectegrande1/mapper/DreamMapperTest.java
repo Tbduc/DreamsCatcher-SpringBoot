@@ -3,8 +3,7 @@ package com.codecool.elproyectegrande1.mapper;
 
 import com.codecool.elproyectegrande1.dto.dream.DreamDto;
 import com.codecool.elproyectegrande1.dto.dream.NewDreamDto;
-import com.codecool.elproyectegrande1.entity.Dream;
-import com.codecool.elproyectegrande1.entity.Image;
+import com.codecool.elproyectegrande1.entity.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -14,14 +13,13 @@ import java.util.List;
 
 class DreamMapperTest {
 
-    private final DreamMapper dreamMapper = new DreamMapper();
+    private final CommentMapper commentMapper = new CommentMapper();
+
+    private final DreamMapper dreamMapper = new DreamMapper(commentMapper);
 
     @Test
     void shouldMapEntityToDreamDto() {
-        Dream dream = new Dream("Test", "test", new ArrayList<>(), new Image());
-        dream.setId(1L);
-        dream.setLikes(10);
-        dream.setViews(200);
+        Dream dream = getDream();
 
         List<String> hashtags = new ArrayList<>();
         hashtags.add("test");
@@ -34,7 +32,31 @@ class DreamMapperTest {
         Assertions.assertEquals(dream.getDreamTitle(), actual.getDreamTitle());
         Assertions.assertEquals(dream.getDreamDescription(), actual.getDreamDescription());
         Assertions.assertEquals(dream.getHashtags(), actual.getHashtags());
-        Assertions.assertEquals(dream.getMainImage(), actual.getImage());
+        Assertions.assertEquals(dream.getMainImage().getId(), actual.getImage());
+    }
+
+    private Dream getDream() {
+        Dream dream = new Dream("Test", "test", new ArrayList<>(), new Image());
+        Dreamer dreamer = new Dreamer();
+        Image mainImage = new Image();
+        mainImage.setId(1L);
+        HashSet comments = getComments();
+        dream.setId(1L);
+        dream.setLikes(10);
+        dream.setViews(200);
+        dream.setComments(comments);
+        dream.setDreamer(dreamer);
+        dream.setMainImage(mainImage);
+        return dream;
+    }
+
+    private HashSet getComments() {
+        Comment comment = new Comment();
+        User user = new User();
+        comment.setUser(user);
+        HashSet comments = new HashSet<>();
+        comments.add(comment);
+        return comments;
     }
 
     @Test

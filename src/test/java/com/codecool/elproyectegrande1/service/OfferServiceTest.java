@@ -50,7 +50,7 @@ public class OfferServiceTest {
     }
 
     @Test
-    public  void testGetOfferById() {
+    public void testGetOfferById() {
         Long id = 1L;
         Offer offer = new Offer();
         offer.setId(id);

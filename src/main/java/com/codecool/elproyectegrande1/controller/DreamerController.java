@@ -5,21 +5,19 @@ import com.codecool.elproyectegrande1.dto.dreamer.DreamerDto;
 import com.codecool.elproyectegrande1.dto.dreamer.NewDreamerDto;
 import com.codecool.elproyectegrande1.dto.user.UserDto;
 import com.codecool.elproyectegrande1.entity.Dreamer;
-import com.codecool.elproyectegrande1.entity.Image;
 import com.codecool.elproyectegrande1.service.DreamerService;
-import com.codecool.elproyectegrande1.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.security.RolesAllowed;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.List;
 
 
-@CrossOrigin(origins = "http://localhost:8081/")
+@CrossOrigin(origins = "https://dreams-catcher.onrender.com/")
 @RestController
 @RequestMapping("/api/v1/dreamers")
 public class DreamerController {
@@ -46,7 +44,7 @@ public class DreamerController {
         return dreamerService.findDreamerByUserId(id);
     }
 
-
+    @RolesAllowed({"ROLE_DREAMER", "ROLE_MENTOR", "ROLE_ADMIN"})
     @PutMapping("/{nickname}/follow")
     public ResponseEntity<String> followDreamer(@PathVariable("nickname") String nickname, Principal principal) {
         String name = principal.getName();
@@ -54,6 +52,7 @@ public class DreamerController {
             return new ResponseEntity<>("Followed successfully!", HttpStatus.OK);
     }
 
+    @RolesAllowed({"ROLE_DREAMER", "ROLE_MENTOR", "ROLE_ADMIN"})
     @PutMapping("/{nickname}/unfollow")
     public ResponseEntity<String> unfollowDreamer(@PathVariable String nickname, Principal principal) {
         String name = principal.getName();
@@ -66,6 +65,7 @@ public class DreamerController {
         return dreamerService.getDreamerWithMostFollowers();
     }
 
+    @RolesAllowed({"ROLE_DREAMER", "ROLE_MENTOR", "ROLE_ADMIN"})
     @PutMapping("/donate/{id}/{amount}")
     public ResponseEntity<String> donateDreamer(@PathVariable Long id, @PathVariable BigDecimal amount) {
         dreamerService.donateDreamer(id, amount);

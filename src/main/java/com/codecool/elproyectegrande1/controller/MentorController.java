@@ -18,7 +18,7 @@ import java.util.List;
 import java.security.Principal;
 import java.util.Objects;
 
-@CrossOrigin(origins = "http://localhost:8081/")
+@CrossOrigin(origins = "https://dreams-catcher.onrender.com/")
 @RestController
 @RequestMapping("/api/v1/mentors")
 public class MentorController {

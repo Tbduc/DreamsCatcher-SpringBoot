@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/v1/comments")
@@ -22,7 +21,6 @@ public class CommentController {
     public CommentController(CommentService commentService) {
         this.commentService = commentService;
     }
-
 
     @PutMapping("/{id}/like")
     public void likeComment(@PathVariable Long id) {

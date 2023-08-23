@@ -9,13 +9,13 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 
 import static com.codecool.elproyectegrande1.entity.EOffer.PRIVATE_LESSON;
 
 class OfferMapperTest {
 
-    private final OfferMapper offerMapper = new OfferMapper();
+    private final CommentMapper commentMapper = new CommentMapper();
+    private final OfferMapper offerMapper = new OfferMapper(commentMapper);
 
     @Test
     void shouldMapEntityToOfferDto() {

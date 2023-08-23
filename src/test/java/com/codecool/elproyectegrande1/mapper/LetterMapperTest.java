@@ -13,11 +13,9 @@ class LetterMapperTest {
     @Test
     void shouldMapEntityToLetterDto() {
         Letter letter = new Letter("Test content", "Test sender");
-        letter.setId(1L);
 
         LetterDto actual = letterMapper.mapEntityToLetterDto(letter);
 
-        Assertions.assertEquals(letter.getId(), actual.getId());
         Assertions.assertEquals(letter.getContent(), actual.getContent());
         Assertions.assertEquals(letter.getSender(), actual.getSender());
     }

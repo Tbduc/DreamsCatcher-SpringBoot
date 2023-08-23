@@ -42,12 +42,17 @@ class DreamerRepositoryTest {
 
     @Test
     void givenDreamerRepository_whenSaveAndRetrieveEntity_thenOK() {
+        //given:
         User user = createUserWithRoles();
         User foundUser = userRepository.findById(user.getId()).orElse(null);
         HashSet<Letter> letters = new HashSet<>();
         Dreamer dreamer = dreamerRepository.save(new Dreamer(foundUser.getUsername(), foundUser.getEmail(), foundUser.getPassword(), letters));
         dreamer.setId(1L);
+
+        //when:
         Dreamer foundEntity = dreamerRepository.findById(dreamer.getId()).orElse(null);
+
+        //then:
         Assertions.assertNotNull(foundEntity);
         Assertions.assertEquals(dreamer.getUsername(), foundEntity.getUsername());
     }

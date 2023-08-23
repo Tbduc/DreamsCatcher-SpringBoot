@@ -22,7 +22,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8081/")
+                        .allowedOrigins("https://dreams-catcher.onrender.com/")
                         .allowedMethods("GET", "POST", "PUT", "DELETE")
                         .allowedHeaders("Content-Type", "Authorization");
                 registry.addMapping("/**")
@@ -39,7 +39,7 @@ public class CorsConfig {
 
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("http://localhost:8081/"));
+        config.setAllowedOrigins(Collections.singletonList("https://dreams-catcher.onrender.com/"));
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setMaxAge(MAX_AGE_SECS);
