@@ -1,4 +1,4 @@
-# DreamsCatcher (Version Alpha 0.02)
+# DreamsCatcher (Version Alpha 0.025)
 A new social media web application where users can share their dreams and get support from others to realize them.
 
 I have implemented many features for the back end, but the most notable ones are:
@@ -10,7 +10,7 @@ I have implemented many features for the back end, but the most notable ones are
 -  Dreams Creation
 -  Users' profiles
 -  Dreamer and Mentor roles
--  Many unit tests
+-  At least 60% of unit tests and continuously refactoring them
 -  User entity and its child classes
 -  Adding Avatars
 -  Updating User Profile
