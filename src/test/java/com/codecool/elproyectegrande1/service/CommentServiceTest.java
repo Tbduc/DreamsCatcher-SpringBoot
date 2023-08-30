@@ -72,7 +72,6 @@ class CommentServiceTest {
     @Test
     void shouldLikeComment() {
         //given:
-        NewCommentDto newCommentDto = new NewCommentDto("New comment");
         User user = getUser();
         Dream dream = new Dream("New dream", "Description", new ArrayList<>(), new Image());
         Comment comment = new Comment("text", 0, user.getUsername(), user);

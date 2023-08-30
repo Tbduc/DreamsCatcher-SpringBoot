@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -26,8 +27,9 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 class DreamerServiceTest {
 
-    @Mock
+    @Spy
     private NewDreamerMapper newDreamerMapper;
+
     @Mock
     private DreamerRepository dreamerRepository;
     @Mock
@@ -43,7 +45,7 @@ class DreamerServiceTest {
         DreamerDto dreamerDto = Instancio.of(DreamerDto.class).create();
 
         //when:
-        when(dreamerRepository.save(dreamer)).thenReturn(dreamer);
+        when(userRepository.save(dreamer)).thenReturn(dreamer);
         when(newDreamerMapper.mapNewDreamerDtoToEntity(newDreamerDto)).thenReturn(dreamer);
         when(newDreamerMapper.mapEntityToDreamerDto(dreamer)).thenReturn(dreamerDto);
         DreamerDto actual = dreamerService.createDreamer(newDreamerDto);

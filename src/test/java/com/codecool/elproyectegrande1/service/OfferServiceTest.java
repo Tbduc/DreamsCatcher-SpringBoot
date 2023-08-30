@@ -32,6 +32,7 @@ public class OfferServiceTest {
 
     @Test
     public void testGetAllOffers() {
+        //given
         Offer offer1 = new Offer();
         Offer offer2 = new Offer();
         List<Offer> offers = Arrays.asList(offer1, offer2);
@@ -44,8 +45,10 @@ public class OfferServiceTest {
         when(offerMapper.mapEntityToOfferDto(offer1)).thenReturn(offerDto1);
         when(offerMapper.mapEntityToOfferDto(offer2)).thenReturn(offerDto2);
 
+        //when
         List<OfferDto> result = offerService.getAllOffers();
 
+        //then
         assertEquals(offerDtos, result);
     }
 

@@ -6,6 +6,7 @@ import com.codecool.elproyectegrande1.entity.Image;
 import com.codecool.elproyectegrande1.entity.Offer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,8 +15,8 @@ import static com.codecool.elproyectegrande1.entity.EOffer.PRIVATE_LESSON;
 
 class OfferMapperTest {
 
-    private final CommentMapper commentMapper = new CommentMapper();
-    private final OfferMapper offerMapper = new OfferMapper(commentMapper);
+    @SpyBean
+    private OfferMapper offerMapper;
 
     @Test
     void shouldMapEntityToOfferDto() {
@@ -29,7 +30,7 @@ class OfferMapperTest {
         Assertions.assertEquals(offer.getDescription(), actual.getDescription());
         Assertions.assertEquals(offer.getPrice(), actual.getPrice());
         Assertions.assertEquals(offer.getDate(), actual.getDate());
-        Assertions.assertEquals(offer.getMainImage(), actual.getImage());
+        Assertions.assertEquals(offer.getMainImage().getId(), actual.getImage());
         Assertions.assertEquals(offer.getComments(), actual.getComments());
     }
 

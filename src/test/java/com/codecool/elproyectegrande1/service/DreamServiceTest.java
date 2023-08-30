@@ -30,7 +30,7 @@ class DreamServiceTest {
 
     @Test
     void shouldReturnAllDreams() {
-
+        //given:
         Dream dream = new Dream();
 
         Dream dream2 = new Dream();
@@ -40,15 +40,16 @@ class DreamServiceTest {
         DreamDto dreamDto = new DreamDto();
 
         DreamDto dreamDto2 = new DreamDto();
-
         List<DreamDto> expected = List.of(dreamDto, dreamDto2);
 
         Mockito.when(dreamRepository.findAll()).thenReturn(dreams);
         when(dreamMapper.mapEntityToDreamDto(dream)).thenReturn(dreamDto);
         when(dreamMapper.mapEntityToDreamDto(dream2)).thenReturn(dreamDto2);
 
+        //when:
         List<DreamDto> actual = dreamService.getAllDreams();
 
+        //then:
         Assertions.assertEquals(expected, actual);
 
     }

@@ -11,13 +11,11 @@ import com.codecool.elproyectegrande1.mapper.UserMapper;
 import com.codecool.elproyectegrande1.repository.ImageRepository;
 import com.codecool.elproyectegrande1.repository.OfferRepository;
 import com.codecool.elproyectegrande1.repository.UserRepository;
-import com.codecool.elproyectegrande1.util.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -93,13 +91,13 @@ public class MentorService {
 
     public MentorDto getMentorByNickname(String nickname) {
             Mentor mentor = (Mentor) userRepository.findByUsername(nickname)
-                    .orElseThrow(() -> new IllegalArgumentException("Mentor with id " + nickname + " not found"));
+                    .orElseThrow(() -> new IllegalArgumentException("Mentor with username " + nickname + " not found"));
             return mentorMapper.mapEntityToDto(mentor);
     }
 
     public void followMentor(String nickname, String name) {
         Mentor mentor = (Mentor) userRepository.findByUsername(nickname)
-                .orElseThrow(() -> new IllegalArgumentException("Mentor with id " + nickname + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Mentor with username " + nickname + " not found"));
         User user = userRepository.findByUsername(name).orElse(null);
         User userGoogle = null;
 
@@ -117,8 +115,9 @@ public class MentorService {
 
     public void unfollowMentor(String nickname, String name) {
         Mentor toBeUnfollowed = (Mentor) userRepository.findByUsername(nickname)
-                .orElseThrow(() -> new IllegalArgumentException("Mentor with id " + nickname + " not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Mentor with username " + nickname + " not found"));
         User user= userRepository.findByUsername(name).orElse(null);
+
         if (user != null)
             checkIfUnfollowed(toBeUnfollowed, name, user);
         else {
@@ -126,8 +125,10 @@ public class MentorService {
             if (user != null)
                 checkIfUnfollowed(toBeUnfollowed, user.getUsername(), user);
         }
+
         if (toBeUnfollowed.getFollowers() == 0)
             toBeUnfollowed.setFollowers(1);
+
         toBeUnfollowed.setFollowers(toBeUnfollowed.getFollowers() - 1);
         userRepository.save(toBeUnfollowed);
     }
