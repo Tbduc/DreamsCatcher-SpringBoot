@@ -148,6 +148,7 @@ public class MentorService {
             }
 
         }
+
         if (user instanceof Dreamer) {
             dreamer = (Dreamer) userRepository.findByUsername(name).orElse(null);
             if (dreamer != null) {

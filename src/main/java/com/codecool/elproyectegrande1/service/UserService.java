@@ -1,14 +1,16 @@
 package com.codecool.elproyectegrande1.service;
 
 import com.codecool.elproyectegrande1.dto.user.UserDto;
-import com.codecool.elproyectegrande1.entity.*;
+import com.codecool.elproyectegrande1.entity.Avatar;
+import com.codecool.elproyectegrande1.entity.ERole;
+import com.codecool.elproyectegrande1.entity.Mentor;
+import com.codecool.elproyectegrande1.entity.User;
 import com.codecool.elproyectegrande1.jwt.JwtUtils;
 import com.codecool.elproyectegrande1.jwt.payload.request.LoginRequest;
 import com.codecool.elproyectegrande1.jwt.payload.request.SignupRequest;
 import com.codecool.elproyectegrande1.jwt.payload.response.MessageResponse;
 import com.codecool.elproyectegrande1.mapper.UserMapper;
 import com.codecool.elproyectegrande1.repository.AvatarRepository;
-import com.codecool.elproyectegrande1.repository.DreamerRepository;
 import com.codecool.elproyectegrande1.repository.MentorRepository;
 import com.codecool.elproyectegrande1.repository.UserRepository;
 import com.codecool.elproyectegrande1.security.oauth2.UserPrincipal;
@@ -28,7 +30,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 @Service
 public class UserService {
@@ -93,7 +94,7 @@ public class UserService {
     public void findUserIfExists(LoginRequest loginRequest) {
         User user = userRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
         System.out.println(user.getRoles());
-        if(user.getRoles().iterator().next().getName() == ERole.ROLE_MENTOR){
+        if (user.getRoles().iterator().next().getName() == ERole.ROLE_MENTOR) {
             Mentor mentor = mentorRepository.findByUsername(loginRequest.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User not found"));
             if (!mentor.isVerified()) {
                 throw new BadCredentialsException("User not verified!");

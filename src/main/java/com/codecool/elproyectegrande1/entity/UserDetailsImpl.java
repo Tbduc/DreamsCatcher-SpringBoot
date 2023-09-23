@@ -44,15 +44,10 @@ public class UserDetailsImpl implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
+        Long userProfileId = null;
+
         if (user.getProfilePicture() != null)
-            return new UserDetailsImpl(
-                    user.getId(),
-                    user.getUsername(),
-                    user.getEmail(),
-                    user.getPassword(),
-                    authorities,
-                    user.getProfilePicture().getId(),
-                    user.getImageUrl());
+            userProfileId = user.getProfilePicture().getId();
 
         return new UserDetailsImpl(
                 user.getId(),
@@ -60,7 +55,7 @@ public class UserDetailsImpl implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 authorities,
-                null,
+                userProfileId,
                 user.getImageUrl());
     }
 
