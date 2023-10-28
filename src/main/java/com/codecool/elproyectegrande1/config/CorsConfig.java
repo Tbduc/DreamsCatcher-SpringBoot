@@ -40,6 +40,7 @@ public class CorsConfig {
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.setAllowedOrigins(Collections.singletonList("https://dreams-catcher.onrender.com/"));
+        config.setAllowedOrigins(Collections.singletonList("http://localhost:8081/"));
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         config.setMaxAge(MAX_AGE_SECS);

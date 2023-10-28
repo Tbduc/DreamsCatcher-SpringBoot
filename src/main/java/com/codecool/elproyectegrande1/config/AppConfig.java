@@ -4,6 +4,7 @@ package com.codecool.elproyectegrande1.config;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.ArrayList;
@@ -13,12 +14,23 @@ import java.util.List;
 @EnableAsync
 @Configuration
 @ConfigurationProperties("app")
+@PropertySource(value={"classpath:application-dev.properties"})
 public class AppConfig {
     private List<String> authorizedRedirectUris = new ArrayList<>();
 
     private String tokenSecret;
 
     private long tokenExpirationMsec;
+
+    private String passwordResetUrl;
+
+    public String getPasswordResetUrl() {
+        return passwordResetUrl;
+    }
+
+    public void setPasswordResetUrl(String passwordResetUrl) {
+        this.passwordResetUrl = passwordResetUrl;
+    }
 
     public List<String> getAuthorizedRedirectUris() {
         return authorizedRedirectUris;

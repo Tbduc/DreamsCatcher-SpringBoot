@@ -72,7 +72,7 @@ public class MentorService {
     public MentorDto getMentor(String user_id) {
         Mentor mentor = (Mentor) userRepository.findByUsername(user_id)
                 .orElseThrow(() -> new IllegalArgumentException("Mentor with nickname " + user_id + " not found"));
-        System.out.println(mentor.isVerified());
+
         return null;
     }
 
@@ -120,11 +120,10 @@ public class MentorService {
 
         if (user != null)
             checkIfUnfollowed(toBeUnfollowed, name, user);
-        else {
+        else
             user = userRepository.findByEmail(name).orElse(null);
             if (user != null)
                 checkIfUnfollowed(toBeUnfollowed, user.getUsername(), user);
-        }
 
         if (toBeUnfollowed.getFollowers() == 0)
             toBeUnfollowed.setFollowers(1);
@@ -139,12 +138,13 @@ public class MentorService {
         if (user instanceof Mentor) {
             mentor = (Mentor) userRepository.findByUsername(name).orElse(null);
             if (mentor != null) {
-                if (toBeUnfollowed.getFollowedMentors() != null && !toBeUnfollowed.getFollowedMentors().contains(mentor)) {
+                if (toBeUnfollowed.getFollowedMentors() != null && !toBeUnfollowed.getFollowedMentors().contains(mentor))
                     throw new IllegalArgumentException("You are not following this mentor");
-                } else
+                 else {
                     toBeUnfollowed.removeMentor(mentor);
                     mentor.removeMentor(toBeUnfollowed);
                     mentor.removeMentorFromFollowed();
+                }
             }
 
         }
@@ -152,9 +152,9 @@ public class MentorService {
         if (user instanceof Dreamer) {
             dreamer = (Dreamer) userRepository.findByUsername(name).orElse(null);
             if (dreamer != null) {
-                if (toBeUnfollowed.getFollowedDreamers() != null && !toBeUnfollowed.getFollowedDreamers().contains(dreamer)) {
+                if (toBeUnfollowed.getFollowedDreamers() != null && !toBeUnfollowed.getFollowedDreamers().contains(dreamer))
                     throw new IllegalArgumentException("You are not following this mentor");
-                } else {
+                else {
                     toBeUnfollowed.removeDreamer(dreamer);
                     dreamer.removeDreamerFromFollowed();
                 }
@@ -172,12 +172,10 @@ public class MentorService {
             if (dreamer == null)
                 dreamer = (Dreamer) userRepository.findByEmail(name).orElse(null);
             if (dreamer != null)
-                if (toBeFollowed.getFollowedDreamers().contains(dreamer)) {
+                if (toBeFollowed.getFollowedDreamers().contains(dreamer))
                     throw new IllegalArgumentException("You are already following this mentor");
-                }
-                else {
+                else
                     toBeFollowed.getFollowedDreamers().add(dreamer);
-                }
         }
 
         if (user instanceof Mentor) {
@@ -185,12 +183,10 @@ public class MentorService {
             if (mentor == null)
                 mentor = (Mentor) userRepository.findByEmail(name).orElse(null);
             if (mentor != null)
-                if (toBeFollowed.getFollowedMentors().contains(mentor)) {
+                if (toBeFollowed.getFollowedMentors().contains(mentor))
                     throw new IllegalArgumentException("You are already following this mentor");
-                }
-                else {
+                else
                     toBeFollowed.getFollowedMentors().add(mentor);
-                }
         }
     }
 

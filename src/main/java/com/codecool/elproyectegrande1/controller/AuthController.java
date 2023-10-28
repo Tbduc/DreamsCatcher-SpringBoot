@@ -1,6 +1,8 @@
 package com.codecool.elproyectegrande1.controller;
 
-import com.codecool.elproyectegrande1.entity.*;
+import com.codecool.elproyectegrande1.entity.Role;
+import com.codecool.elproyectegrande1.entity.User;
+import com.codecool.elproyectegrande1.entity.UserDetailsImpl;
 import com.codecool.elproyectegrande1.jwt.JwtUtils;
 import com.codecool.elproyectegrande1.jwt.payload.request.LoginRequest;
 import com.codecool.elproyectegrande1.jwt.payload.request.SignupRequest;
@@ -92,11 +94,11 @@ public class AuthController {
                 userDetails.getImageUrl()));
     }
 
+    // Refactor it in order to create ConfirmationToken to restore forgotten password
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         userService.getMessageResponseResponseEntity(signUpRequest);
 
-        // Create new user's account
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));

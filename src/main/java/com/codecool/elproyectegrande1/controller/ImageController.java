@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.Optional;
 
-@CrossOrigin(origins = "https://dreams-catcher.onrender.com/")
+@CrossOrigin(origins = "https://dreams-catcher.onrender.com/, http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1")
 public class ImageController {

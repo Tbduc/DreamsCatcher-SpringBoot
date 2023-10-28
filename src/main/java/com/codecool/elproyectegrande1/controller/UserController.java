@@ -1,7 +1,6 @@
 package com.codecool.elproyectegrande1.controller;
 
 import com.codecool.elproyectegrande1.dto.user.UserDto;
-import com.codecool.elproyectegrande1.entity.User;
 import com.codecool.elproyectegrande1.jwt.JwtUtils;
 import com.codecool.elproyectegrande1.security.oauth2.CurrentUser;
 import com.codecool.elproyectegrande1.security.oauth2.UserPrincipal;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-@CrossOrigin(origins = "https://dreams-catcher.onrender.com/")
+@CrossOrigin(origins = "https://dreams-catcher.onrender.com/, http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {

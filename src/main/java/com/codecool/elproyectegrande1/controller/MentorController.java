@@ -1,7 +1,5 @@
 package com.codecool.elproyectegrande1.controller;
 
-import com.codecool.elproyectegrande1.dto.dream.DreamDto;
-import com.codecool.elproyectegrande1.dto.dreamer.DreamerDto;
 import com.codecool.elproyectegrande1.dto.mentor.MentorDto;
 import com.codecool.elproyectegrande1.dto.offer.NewOfferDto;
 import com.codecool.elproyectegrande1.dto.offer.OfferDto;
@@ -13,12 +11,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
-import java.security.Principal;
-import java.util.Objects;
-
-@CrossOrigin(origins = "https://dreams-catcher.onrender.com/")
+@CrossOrigin(origins = "https://dreams-catcher.onrender.com/, http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/mentors")
 public class MentorController {

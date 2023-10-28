@@ -10,14 +10,12 @@ import com.codecool.elproyectegrande1.mapper.NewDreamerMapper;
 import com.codecool.elproyectegrande1.mapper.UserMapper;
 import com.codecool.elproyectegrande1.repository.DreamRepository;
 import com.codecool.elproyectegrande1.repository.UserRepository;
-import com.codecool.elproyectegrande1.util.SessionRemove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -28,14 +26,16 @@ public class DreamerService {
     private final NewDreamerMapper dreamerMapper;
     private final UserMapper userMapper;
     private final DreamMapper dreamMapper;
+    private final UserService userService;
 
     @Autowired
-    public DreamerService(UserRepository userRepository, DreamRepository dreamRepository, NewDreamerMapper dreamerMapper, UserMapper userMapper, DreamMapper dreamMapper) {
+    public DreamerService(UserRepository userRepository, DreamRepository dreamRepository, NewDreamerMapper dreamerMapper, UserMapper userMapper, DreamMapper dreamMapper, UserService userService) {
         this.userRepository = userRepository;
         this.dreamRepository = dreamRepository;
         this.dreamerMapper = dreamerMapper;
         this.userMapper = userMapper;
         this.dreamMapper = dreamMapper;
+        this.userService = userService;
     }
 
     public DreamerDto createDreamer(NewDreamerDto newDreamerDto) {
@@ -154,6 +154,9 @@ public class DreamerService {
         Dreamer dreamer = dreamerMapper.mapUserToDreamer(user);
         dreamer.setRoles(roles);
         userRepository.save(dreamer);
+
+        //send confirmation email to the user
+        userService.sendConfirmationEmail(dreamer);
     }
 
     public List<DreamDto> getAllDreamsByDreamerNickname(String nickname) {

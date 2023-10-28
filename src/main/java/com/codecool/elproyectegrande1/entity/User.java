@@ -130,6 +130,10 @@ public class User implements UserDetails {
         return false;
     }
 
+    public boolean setEnabled() {
+        return true;
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }
