@@ -131,7 +131,7 @@ public class UserService {
         mailMessage.setTo(user.getEmail());
         mailMessage.setSubject("Complete Registration!");
         mailMessage.setFrom("admin@dreamscatcher.com");
-        mailMessage.setText("To complete the password reset process, please click here: "
+        mailMessage.setText("To complete the registration process, please click here: "
                 + appConfig.getPasswordResetUrl() + "confirm-reset?token=" + confirmationToken.getConfirmationToken());
 
         emailSenderService.sendEmail(mailMessage);
@@ -168,7 +168,7 @@ public class UserService {
     public void sendEmail() {
         // create the email
         SimpleMailMessage mailMessage = new SimpleMailMessage();
-        mailMessage.setTo("trungusek@yahoo.com");
+        mailMessage.setTo("xxxx@gmail.com");
         mailMessage.setSubject("Complete Password Reset!");
         mailMessage.setFrom("admin@dreamscatcher.com");
         mailMessage.setText("To complete the password reset process, please click here");
