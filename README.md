@@ -17,3 +17,6 @@ I have implemented many features for the back end, but the most notable ones are
 -  Donation through Paypal
 -  Refactoring of various implementation
 -  At least 50% of entities and Dtos
+-  Password reset through email verification
+
+Pre-demo version: https://dreams-catcher.onrender.com/
