@@ -19,7 +19,11 @@ public class CommentMapper {
                 entity.getTimeUpdated(),
                 entity.getLikes(),
                 entity.getUsername(),
-                entity.getUser().getId()
+                entity.getUser().getId(),
+                entity.getUser().getLikedComments()
+                        .stream()
+                        .map(comment -> comment.getId())
+                        .toList()
                 );
     }
 

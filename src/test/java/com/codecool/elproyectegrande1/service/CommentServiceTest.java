@@ -81,7 +81,7 @@ class CommentServiceTest {
         when(commentRepository.findById(eq(comment.getId()))).thenReturn(Optional.of(comment));
 
         //when:
-        sut.likeComment(comment.getId());
+        sut.likeComment(comment.getId(), user.getId());
 
         //then:
         Assertions.assertEquals(comment.getLikes(), 1);

@@ -67,6 +67,7 @@ public class DreamerService {
             followDreamerOrMentor(name, toBeFollowed, user);
         else if (userGoogle != null)
             followDreamerOrMentor(userGoogle.getUsername(), toBeFollowed, userGoogle);
+
         toBeFollowed.setFollowers(toBeFollowed.getFollowers() + 1);
         userRepository.save(toBeFollowed);
     }
@@ -102,13 +103,15 @@ public class DreamerService {
         Dreamer dreamer = (Dreamer) userRepository.findByUsername(nickname)
                 .orElseThrow(() -> new IllegalArgumentException("Dreamer with id " + nickname + " not found"));
         User user = userRepository.findByUsername(name).orElse(null);
+
         if (user != null)
-            checkIfUnfollowed(dreamer,name, user);
+            checkIfUnfollowed(dreamer, name, user);
         else {
             user = userRepository.findByEmail(name).orElse(null);
             if (user != null)
                 checkIfUnfollowed(dreamer, name, user);
         }
+
         if (dreamer.getFollowers() == 0)
             dreamer.setFollowers(1);
         dreamer.setFollowers(dreamer.getFollowers() - 1);
@@ -118,6 +121,7 @@ public class DreamerService {
     private void checkIfUnfollowed(Dreamer toBeUnfollowed, String name, User user) {
         Dreamer dreamer;
         Mentor mentor;
+
         if (user instanceof Mentor) {
             mentor = (Mentor) userRepository.findByUsername(name).orElse(null);
             if (mentor != null)
@@ -129,6 +133,7 @@ public class DreamerService {
                     mentor.removeMentorFromFollowed();
                 }
         }
+
         if (user instanceof Dreamer) {
             dreamer = (Dreamer) userRepository.findByUsername(name).orElse(null);
             if (dreamer != null)

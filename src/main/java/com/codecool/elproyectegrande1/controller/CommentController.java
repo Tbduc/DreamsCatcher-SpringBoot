@@ -22,9 +22,14 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PutMapping("/{id}/like")
-    public void likeComment(@PathVariable Long id) {
-        commentService.likeComment(id);
+    @PutMapping("/{id}/like/{userId}")
+    public ResponseEntity<MessageResponse> likeComment(@PathVariable Long id, @PathVariable Long userId) {
+        return commentService.likeComment(id, userId);
+    }
+
+    @PutMapping("/{id}/dislike/{userId}")
+    public ResponseEntity<MessageResponse> disLikeComment(@PathVariable Long id, @PathVariable Long userId) {
+        return commentService.disLikeComment(id, userId);
     }
 
     @PutMapping("{id}/update-comment/{comment}/{updatedDate}")

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-@CrossOrigin(origins = "https://dreams-catcher.onrender.com/, http://localhost:8081/")
+@CrossOrigin(origins = "http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/mentors")
 public class MentorController {
@@ -50,11 +50,6 @@ public class MentorController {
         return mentorService.getMentorByNickname(nickname);
     }
 
-//    @GetMapping("/{id}")
-//    public MentorDto getMentor(@PathVariable("id") String id) {
-//        return mentorService.getMentor(id);
-//    }
-
     @GetMapping("/{nickname}/offers")
     public List<OfferDto> getAllOffersByMentorNickname(@PathVariable("nickname") String nickname) {
         return mentorService.getAllOffersByMentorNickname(nickname);
@@ -63,7 +58,6 @@ public class MentorController {
     @PutMapping("/{nickname}/follow")
     public ResponseEntity<String> followMentor(@PathVariable("nickname") String nickname, Principal principal) {
         String name = principal.getName();
-        System.out.println(name);
         mentorService.followMentor(nickname, name);
         return new ResponseEntity<>("Followed successfully!", HttpStatus.OK);
     }

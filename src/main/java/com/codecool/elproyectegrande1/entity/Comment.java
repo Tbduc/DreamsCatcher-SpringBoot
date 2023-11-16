@@ -135,4 +135,12 @@ public class Comment {
     public void setReplyId(Long replyId) {
         this.replyId = replyId;
     }
+
+    public void addToLikedComments(User user) {
+        user.getLikedComments().add(this);
+    }
+
+    public void removeFromLikedComments(User user) {
+        user.getLikedComments().remove(this);
+    }
 }

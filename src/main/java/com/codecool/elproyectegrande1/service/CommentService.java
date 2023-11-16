@@ -5,11 +5,13 @@ import com.codecool.elproyectegrande1.dto.comment.NewCommentDto;
 import com.codecool.elproyectegrande1.entity.Comment;
 import com.codecool.elproyectegrande1.entity.Dream;
 import com.codecool.elproyectegrande1.entity.User;
+import com.codecool.elproyectegrande1.jwt.payload.response.MessageResponse;
 import com.codecool.elproyectegrande1.mapper.CommentMapper;
 import com.codecool.elproyectegrande1.repository.CommentRepository;
 import com.codecool.elproyectegrande1.repository.DreamRepository;
 import com.codecool.elproyectegrande1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -56,10 +58,17 @@ public class CommentService {
         return commentMapper.mapEntityToCommentDto(savedComment);
     }
 
-    public void likeComment(Long commentId) {
+    public ResponseEntity<MessageResponse> likeComment(Long commentId, Long userId) {
         Comment comment = commentRepository.findById(commentId).orElseThrow();
-        comment.setLikes(comment.getLikes() + 1);
-        commentRepository.save(comment);
+        User user = userRepository.findById(userId).orElseThrow();
+        if (!user.getLikedComments().contains(comment)) {
+            comment.addToLikedComments(user);
+            comment.setLikes(comment.getLikes() + 1);
+            commentRepository.save(comment);
+            return ResponseEntity.ok().body(new MessageResponse(user.getUsername() + " likes this comment!"));
+        }
+        else
+            return ResponseEntity.badRequest().body(new MessageResponse("User already liked this comment!"));
     }
 
     public void updateComment(Long id, String description, LocalDateTime updatedDate) {
@@ -94,4 +103,16 @@ public class CommentService {
         return commentDtos;
     }
 
+    public ResponseEntity<MessageResponse> disLikeComment(Long commentId, Long userId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow();
+        if (user.getLikedComments().contains(comment)) {
+            comment.removeFromLikedComments(user);
+            if (comment.getLikes() > 0)
+                comment.setLikes(comment.getLikes() - 1);
+            commentRepository.save(comment);
+            return ResponseEntity.ok().body(new MessageResponse(user.getUsername() + " dislikes this comment!"));
+        } else
+            return ResponseEntity.badRequest().body(new MessageResponse("User didn't like this comment!"));
+    }
 }

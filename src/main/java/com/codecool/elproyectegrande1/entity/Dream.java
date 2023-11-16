@@ -58,6 +58,11 @@ public class Dream {
     @JsonIgnoreProperties("dreams")
     private Dreamer dreamer;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
+    @JsonIgnoreProperties("likedDreams")
+    private User user;
+
     public Dream() {
     }
 
@@ -136,14 +141,6 @@ public class Dream {
         this.comments = comments;
     }
 
-//    public List<Image> getImages() {
-//        return images;
-//    }
-//
-//    public void setImages(List<Image> images) {
-//        this.images = images;
-//    }
-
     public Dreamer getDreamer() {
         return dreamer;
     }
@@ -158,5 +155,13 @@ public class Dream {
 
     public void setMainImage(Image mainImage) {
         this.mainImage = mainImage;
+    }
+
+    public void addToUserLikes(User user) {
+        user.getLikedDreams().add(this);
+    }
+
+    public void removeFromUserLikes(User user) {
+        user.getLikedDreams().remove(this);
     }
 }

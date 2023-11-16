@@ -71,6 +71,7 @@ public class ImageService {
     public void updateDreamAndOffer(Long dreamId, Long offerId, Image image) {
         Dream dream;
         Offer offer;
+
         if (dreamId != null) {
             dream = dreamRepository.findById(dreamId).orElse(null);
             if (!dream.equals(null)) {
@@ -85,6 +86,7 @@ public class ImageService {
                 offerRepository.update(offer, offerId);
             }
         }
+
     }
 
     public void updateProfileImage(MultipartFile file, Long userId) throws IOException {

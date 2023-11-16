@@ -7,7 +7,7 @@ import com.codecool.elproyectegrande1.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "https://dreams-catcher.onrender.com/, http://localhost:8081/")
+@CrossOrigin(origins = "http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/user-account")
 public class UserAccountController {

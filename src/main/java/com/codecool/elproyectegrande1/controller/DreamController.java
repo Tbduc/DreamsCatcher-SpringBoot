@@ -19,7 +19,7 @@ import javax.annotation.security.RolesAllowed;
 import java.security.Principal;
 import java.util.List;
 
-@CrossOrigin(origins = "https://dreams-catcher.onrender.com/, http://localhost:8081/")
+@CrossOrigin(origins = "http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/dreams")
 public class DreamController {
@@ -51,24 +51,23 @@ public class DreamController {
 
     @GetMapping("/all")
     public List<DreamDto> getAllDreams() {
-
         List<DreamDto> all = dreamService.getAllDreams();
         return all;
     }
 
     @GetMapping("/recents")
-    public List<DreamDto> getEightRecentDreams() {
-        return dreamService.getLastEightDreams();
+    public List<DreamDto> getFourRecentDreams() {
+        return dreamService.getLastFourDreams();
     }
 
     @PutMapping("/{id}/like")
-    public void likeDream(@PathVariable Long id) {
-        dreamService.likeDream(id);
+    public void likeDream(@PathVariable Long id, @PathVariable Long userId) {
+        dreamService.likeDream(id, userId);
     }
 
     @PutMapping("/{id}/dislike")
-    public void dislikeDream(@PathVariable Long id) {
-        dreamService.dislikeDream(id);
+    public void dislikeDream(@PathVariable Long id, @PathVariable Long userId) {
+        dreamService.dislikeDream(id, userId);
     }
 
     @GetMapping("/most-liked")
@@ -83,7 +82,7 @@ public class DreamController {
     }
 
     @GetMapping("/most-popular")
-    public List<DreamDto> getMostPopularDreams(Principal principal) {
+    public List<DreamDto> getMostPopularDreams() {
         return dreamService.getTop3DreamsByLikes();
     }
 
@@ -119,7 +118,6 @@ public class DreamController {
     public CommentDto addComment(@RequestBody NewCommentDto newCommentDto, @PathVariable Long id) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        System.out.println(username);
         return commentService.addComment(newCommentDto, username, id);
     }
 }

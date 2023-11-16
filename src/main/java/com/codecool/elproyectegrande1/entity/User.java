@@ -86,8 +86,19 @@ public class User implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "mentor_id"))
     private Set<Mentor> followedMentors;
 
-    private String providerId;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "dreams_liked",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "dream_id"))
+    private Set<Dream> likedDreams;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(name = "comments_liked",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "comment_id"))
+    private Set<Comment> likedComments;
+
+    private String providerId;
 
     public User() {
     }
@@ -233,6 +244,22 @@ public class User implements UserDetails {
 
     public void setFollowedMentors(Set<Mentor> followedMentors) {
         this.followedMentors = followedMentors;
+    }
+
+    public Set<Dream> getLikedDreams() {
+        return likedDreams;
+    }
+
+    public void setLikedDreams(Set<Dream> likedDreams) {
+        this.likedDreams = likedDreams;
+    }
+
+    public Set<Comment> getLikedComments() {
+        return likedComments;
+    }
+
+    public void setLikedComments(Set<Comment> likedComments) {
+        this.likedComments = likedComments;
     }
 
     @Override

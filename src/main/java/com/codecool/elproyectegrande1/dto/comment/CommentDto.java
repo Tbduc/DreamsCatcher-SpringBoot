@@ -3,6 +3,8 @@ package com.codecool.elproyectegrande1.dto.comment;
 import com.codecool.elproyectegrande1.entity.Dream;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
 
 
 public class CommentDto {
@@ -21,7 +23,10 @@ public class CommentDto {
     private Dream dream;
     private Long userId;
 
-    public CommentDto(Long id, String comment, LocalDateTime createdDate, LocalDateTime updatedDate, int likes, String username, Long userId) {
+    private List<Long> userIdThatLiked;
+
+
+    public CommentDto(Long id, String comment, LocalDateTime createdDate, LocalDateTime updatedDate, int likes, String username, Long userId, List<Long> userIdThatLiked) {
         this.id = id;
         this.comment = comment;
         this.createdDate = createdDate;
@@ -29,6 +34,7 @@ public class CommentDto {
         this.likes = likes;
         this.username = username;
         this.userId = userId;
+        this.userIdThatLiked = userIdThatLiked;
     }
 
     public Long getId() {
@@ -93,5 +99,13 @@ public class CommentDto {
 
     public void setUserId(Long userId) {
         this.userId = userId;
+    }
+
+    public List<Long> getUserIdThatLiked() {
+        return userIdThatLiked;
+    }
+
+    public void setUserIdThatLiked(List<Long> userIdThatLiked) {
+        this.userIdThatLiked = userIdThatLiked;
     }
 }

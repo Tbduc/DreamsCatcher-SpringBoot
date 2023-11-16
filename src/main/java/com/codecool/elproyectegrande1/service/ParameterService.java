@@ -10,14 +10,4 @@ public class ParameterService {
     public ParameterService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
-//    public Parameter saveAndGetParameter(String param, String userId) {
-//        Parameter parameter = new Parameter();
-//        parameter.setParameter(param);
-//        User user = userRepository.findById(Long.valueOf(userId)).orElseThrow();
-//        parameter.setUser(user);
-//        user.addParameters(parameter);
-//        userRepository.update(user, user.getId());
-//        return
-//    }
 }

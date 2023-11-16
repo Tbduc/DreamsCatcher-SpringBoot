@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
-@CrossOrigin(origins = "https://dreams-catcher.onrender.com/, http://localhost:8081/")
+@CrossOrigin(origins = "http://localhost:8081/")
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {

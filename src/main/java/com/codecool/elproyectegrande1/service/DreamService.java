@@ -5,6 +5,7 @@ import com.codecool.elproyectegrande1.dto.dream.NewDreamDto;
 import com.codecool.elproyectegrande1.entity.Dream;
 import com.codecool.elproyectegrande1.entity.DreamStatus;
 import com.codecool.elproyectegrande1.entity.*;
+import com.codecool.elproyectegrande1.repository.UserRepository;
 import com.codecool.elproyectegrande1.service.exceptions.DreamNotFoundException;
 import com.codecool.elproyectegrande1.mapper.DreamMapper;
 import com.codecool.elproyectegrande1.repository.DreamRepository;
@@ -27,15 +28,17 @@ public class DreamService {
     private final DreamerRepository dreamerRepository;
     private final List<Dream> dreams = new ArrayList<>();
     private final ImageRepository imageRepository;
+    private final UserRepository userRepository;
 
 
     @Autowired
     public DreamService(DreamRepository dreamRepository, DreamMapper dreamMapper, DreamerRepository dreamerRepository,
-                        ImageRepository imageRepository) {
+                        ImageRepository imageRepository, UserRepository userRepository) {
         this.dreamRepository = dreamRepository;
         this.dreamMapper = dreamMapper;
         this.dreamerRepository = dreamerRepository;
         this.imageRepository = imageRepository;
+        this.userRepository = userRepository;
     }
 
     public DreamDto addDream(String name, NewDreamDto newDream) {
@@ -59,15 +62,20 @@ public class DreamService {
     }
 
 
-    public void likeDream(Long dreamId) {
+    public void likeDream(Long dreamId, Long userId) {
         Dream dream = dreamRepository.findById(dreamId).orElseThrow();
+        User user = userRepository.findById(userId).orElseThrow();
+        dream.addToUserLikes(user);
         dream.setLikes(dream.getLikes() + 1);
         dreamRepository.save(dream);
     }
 
-    public void dislikeDream(Long dreamId) {
+    public void dislikeDream(Long dreamId, Long userId) {
         Dream dream = dreamRepository.findById(dreamId).orElseThrow();
-        dream.setLikes(dream.getLikes() - 1);
+        User user = userRepository.findById(userId).orElseThrow();
+        dream.removeFromUserLikes(user);
+        if (dream.getLikes() > 0)
+            dream.setLikes(dream.getLikes() - 1);
         dreamRepository.save(dream);
     }
 
@@ -80,11 +88,11 @@ public class DreamService {
     }
 
 
-    public List<DreamDto> getLastEightDreams() {
+    public List<DreamDto> getLastFourDreams() {
         List<Dream> dreams = dreamRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
         List<DreamDto> dreamDtos = new ArrayList<>();
 
-        for (int i = 0; i < 8 && i < dreams.size(); i++) {
+        for (int i = 0; i < 4 && i < dreams.size(); i++) {
             DreamDto dto = dreamMapper.mapEntityToDreamDto(dreams.get(i));
             dreamDtos.add(dto);
         }
