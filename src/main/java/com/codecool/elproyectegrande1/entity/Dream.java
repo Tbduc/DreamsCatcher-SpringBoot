@@ -164,4 +164,12 @@ public class Dream {
     public void removeFromUserLikes(User user) {
         user.getLikedDreams().remove(this);
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

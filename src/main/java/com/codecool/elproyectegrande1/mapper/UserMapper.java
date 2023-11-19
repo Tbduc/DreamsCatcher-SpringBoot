@@ -20,7 +20,10 @@ public class UserMapper {
             profilePictureId,
             user.getAuthorities().stream()
                     .map(item -> item.getAuthority())
-                    .collect(Collectors.toList())
+                    .collect(Collectors.toList()),
+            user.getLikedDreams().stream()
+                    .map(dream -> dream.getId())
+                    .toList()
         );
     }
 

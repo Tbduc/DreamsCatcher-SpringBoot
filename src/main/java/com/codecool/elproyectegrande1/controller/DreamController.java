@@ -60,14 +60,14 @@ public class DreamController {
         return dreamService.getLastFourDreams();
     }
 
-    @PutMapping("/{id}/like")
-    public void likeDream(@PathVariable Long id, @PathVariable Long userId) {
-        dreamService.likeDream(id, userId);
+    @PutMapping("/{id}/like/{userId}")
+    public ResponseEntity<MessageResponse> likeDream(@PathVariable Long id, @PathVariable Long userId) {
+        return dreamService.likeDream(id, userId);
     }
 
-    @PutMapping("/{id}/dislike")
-    public void dislikeDream(@PathVariable Long id, @PathVariable Long userId) {
-        dreamService.dislikeDream(id, userId);
+    @PutMapping("/{id}/dislike/{userId}")
+    public ResponseEntity<MessageResponse> dislikeDream(@PathVariable Long id, @PathVariable Long userId) {
+        return dreamService.dislikeDream(id, userId);
     }
 
     @GetMapping("/most-liked")

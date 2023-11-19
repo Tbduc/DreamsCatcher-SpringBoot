@@ -47,23 +47,24 @@ public class UserDto {
     private BigDecimal funds;
     private Set<Letter> letters;
     private List<Dream> dreams = new ArrayList<>();
-
-    public String getEmail() {
-        return email;
-    }
+    private List<Long> likedDreamsIds;
 
     public UserDto() {
     }
 
-    public UserDto(Long id, String username, String email, String profileImgUrl, Long profilePictureId, List<String> roles) {
+    public UserDto(Long id, String username, String email, String profileImgUrl, Long profilePictureId, List<String> roles, List<Long> likedDreamsIds) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.profileImgUrl = profileImgUrl;
         this.profilePictureId = profilePictureId;
         this.roles = roles;
+        this.likedDreamsIds = likedDreamsIds;
     }
 
+    public String getEmail() {
+        return email;
+    }
     public Long getId() {
         return id;
     }
@@ -189,5 +190,13 @@ public class UserDto {
 
     public void setDreams(List<Dream> dreams) {
         this.dreams = dreams;
+    }
+
+    public List<Long> getLikedDreamsIds() {
+        return likedDreamsIds;
+    }
+
+    public void setLikedDreamsIds(List<Long> likedDreamsIds) {
+        this.likedDreamsIds = likedDreamsIds;
     }
 }

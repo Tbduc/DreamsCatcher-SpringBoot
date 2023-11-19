@@ -5,6 +5,7 @@ import com.codecool.elproyectegrande1.dto.dream.NewDreamDto;
 import com.codecool.elproyectegrande1.entity.Dream;
 import com.codecool.elproyectegrande1.entity.DreamStatus;
 import com.codecool.elproyectegrande1.entity.*;
+import com.codecool.elproyectegrande1.jwt.payload.response.MessageResponse;
 import com.codecool.elproyectegrande1.repository.UserRepository;
 import com.codecool.elproyectegrande1.service.exceptions.DreamNotFoundException;
 import com.codecool.elproyectegrande1.mapper.DreamMapper;
@@ -14,6 +15,7 @@ import com.codecool.elproyectegrande1.repository.ImageRepository;
 import com.codecool.elproyectegrande1.util.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -61,24 +63,30 @@ public class DreamService {
         return dreamMapper.mapEntityToDreamDto(savedDream);
     }
 
-
-    public void likeDream(Long dreamId, Long userId) {
+    public ResponseEntity<MessageResponse> likeDream(Long dreamId, Long userId) {
         Dream dream = dreamRepository.findById(dreamId).orElseThrow();
         User user = userRepository.findById(userId).orElseThrow();
-        dream.addToUserLikes(user);
-        dream.setLikes(dream.getLikes() + 1);
-        dreamRepository.save(dream);
+        if (!user.getLikedDreams().contains(dream)) {
+            dream.addToUserLikes(user);
+            dream.setLikes(dream.getLikes() + 1);
+            dreamRepository.save(dream);
+            return ResponseEntity.ok().body(new MessageResponse(user.getUsername() + " likes this dream!"));
+        } else
+            return ResponseEntity.badRequest().body(new MessageResponse("User already liked this dream!"));
     }
 
-    public void dislikeDream(Long dreamId, Long userId) {
+    public ResponseEntity<MessageResponse> dislikeDream(Long dreamId, Long userId) {
         Dream dream = dreamRepository.findById(dreamId).orElseThrow();
         User user = userRepository.findById(userId).orElseThrow();
-        dream.removeFromUserLikes(user);
-        if (dream.getLikes() > 0)
-            dream.setLikes(dream.getLikes() - 1);
-        dreamRepository.save(dream);
+        if (user.getLikedDreams().contains(dream)) {
+            dream.removeFromUserLikes(user);
+            if (dream.getLikes() > 0)
+                dream.setLikes(dream.getLikes() - 1);
+            dreamRepository.save(dream);
+            return ResponseEntity.ok().body(new MessageResponse(user.getUsername() + " dislikes this dream!"));
+        } else
+            return ResponseEntity.badRequest().body(new MessageResponse("User didn't like this dream!"));
     }
-
 
     public List<DreamDto> getAllDreams() {
         List<Dream> dreams = dreamRepository.findAll();
@@ -86,7 +94,6 @@ public class DreamService {
                 .map(dreamMapper::mapEntityToDreamDto)
                 .collect(Collectors.toList());
     }
-
 
     public List<DreamDto> getLastFourDreams() {
         List<Dream> dreams = dreamRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));

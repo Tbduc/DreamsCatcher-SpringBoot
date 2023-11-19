@@ -49,7 +49,7 @@ public class DreamerController {
     public ResponseEntity<String> followDreamer(@PathVariable("nickname") String nickname, Principal principal) {
         String name = principal.getName();
         dreamerService.followDreamer(nickname, name);
-            return new ResponseEntity<>("Followed successfully!", HttpStatus.OK);
+        return new ResponseEntity<>("Followed successfully!", HttpStatus.OK);
     }
 
     @RolesAllowed({"ROLE_DREAMER", "ROLE_MENTOR", "ROLE_ADMIN"})
